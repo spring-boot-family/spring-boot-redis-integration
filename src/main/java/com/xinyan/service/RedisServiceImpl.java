@@ -40,7 +40,7 @@ public class RedisServiceImpl implements RedisService {
     @Value("${spring.application.name}")
     private String applicationName;
 
-    private String getKey(RedisTypeEnum typeEnum, String key){
+    private String getKey(RedisTypeEnum typeEnum, String key) {
         return new StringBuilder(env)
                 .append(SymbolEnum.COLON.getSymbol())
                 .append(applicationName)
@@ -70,10 +70,8 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 设置字符串
      *
-     * @param key
-     *            key
-     * @param value
-     *            字符串值
+     * @param key   key
+     * @param value 字符串值
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -86,12 +84,9 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 设置字符串(含过期时间)
      *
-     * @param key
-     *            key
-     * @param value
-     *            字符串值
-     * @param timeout
-     *            过期时间，单位：秒
+     * @param key     key
+     * @param value   字符串值
+     * @param timeout 过期时间，单位：秒
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -104,8 +99,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 设置多个字符串
      *
-     * @param paramMap
-     *            字符串Map
+     * @param paramMap 字符串Map
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -118,8 +112,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 获取字符串
      *
-     * @param key
-     *            key
+     * @param key key
      * @return String key对应的字符串值
      */
     @SuppressWarnings("unchecked")
@@ -133,8 +126,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据key列表获取字符串列表
      *
-     * @param keys
-     *            key列表
+     * @param keys key列表
      * @return List<String> key列表对应的字符串列表
      */
     @SuppressWarnings("unchecked")
@@ -148,10 +140,8 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 设置对象(采用Redis的String存储)，默认只存七天
      *
-     * @param key
-     *            key
-     * @param T
-     *            对象
+     * @param key key
+     * @param T   对象
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -164,12 +154,9 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 设置对象(采用Redis的String存储，含过期时间)
      *
-     * @param key
-     *            key
-     * @param T
-     *            对象
-     * @param timeout
-     *            过期时间，单位：秒
+     * @param key     key
+     * @param T       对象
+     * @param timeout 过期时间，单位：秒
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -182,12 +169,9 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 设置对象(采用Redis的String存储，含过期时间)
      *
-     * @param key
-     *            key
-     * @param T
-     *            对象
-     * @param timeout
-     *            过期时间，单位：秒
+     * @param key     key
+     * @param T       对象
+     * @param timeout 过期时间，单位：秒
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -200,8 +184,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 设置多key的同一类型对象(采用Redis的String存储)
      *
-     * @param paramMap
-     *            参数Map
+     * @param paramMap 参数Map
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -214,8 +197,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据key获取对象(对象采用Redis的String存储)
      *
-     * @param key
-     *            key
+     * @param key key
      * @return T 对象
      */
     @SuppressWarnings("unchecked")
@@ -229,8 +211,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据key获取对象(对象采用Redis的String存储)
      *
-     * @param key
-     *            key
+     * @param key key
      * @return T 对象
      */
     @SuppressWarnings("unchecked")
@@ -245,8 +226,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据key列表获取同一对象列表(列表中的对象采用Redis的String存储)
      *
-     * @param keys
-     *            keys列表
+     * @param keys keys列表
      * @return List<T> 对象列表
      */
     @SuppressWarnings("unchecked")
@@ -263,12 +243,9 @@ public class RedisServiceImpl implements RedisService {
     /**
      * Hash设置,可用于保存对象或者保存对象的单个field
      *
-     * @param key
-     *            Hash表的key
-     * @param field
-     *            Hash表中的域field
-     * @param T
-     *            对象
+     * @param key   Hash表的key
+     * @param field Hash表中的域field
+     * @param T     对象
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -281,10 +258,8 @@ public class RedisServiceImpl implements RedisService {
     /**
      * Hash批量设置,可用于保存多个对象或者保存单个对象的多个field
      *
-     * @param key
-     *            Hash表的key
-     * @param paramMap
-     *            Hash表的field和Value组成的Map
+     * @param key      Hash表的key
+     * @param paramMap Hash表的field和Value组成的Map
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -297,10 +272,8 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据Hash表的key和域Field获取对应的Value(可用于获取对象或者获取对象的单个field)
      *
-     * @param key
-     *            Hash表的key
-     * @param field
-     *            Hash表中的域field
+     * @param key   Hash表的key
+     * @param field Hash表中的域field
      * @return T Hash的key和域Field获取对应的Value
      */
     @SuppressWarnings("unchecked")
@@ -314,10 +287,8 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据Hash表的key和域Field列表获取对应的Value列表(可用于获取多个对象或者对象的多个属性)
      *
-     * @param key
-     *            Hash表的key
-     * @param fields
-     *            域Field列表
+     * @param key    Hash表的key
+     * @param fields 域Field列表
      * @return List<T> Hash的key和域Field列表获取对应的Value列表
      */
     @SuppressWarnings("unchecked")
@@ -332,8 +303,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据Hash表的key获取对应的所有对象(可用于获取多个对象)
      *
-     * @param key
-     *            Hash表的key
+     * @param key Hash表的key
      * @return Map<String, T> Hash表的key对应的所有对象Map
      */
     @SuppressWarnings("unchecked")
@@ -348,10 +318,8 @@ public class RedisServiceImpl implements RedisService {
      * 根据Hash表的key和域Field进行删除
      *
      * @param <T>
-     * @param key
-     *            Hash表的key
-     * @param fields
-     *            Hash表对应域Field数组
+     * @param key    Hash表的key
+     * @param fields Hash表对应域Field数组
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -363,13 +331,29 @@ public class RedisServiceImpl implements RedisService {
 
     /** ===============Redis-HASH数据结构接口END=============== */
 
-    /** ===============Redis-SET数据结构接口START=============== */
+    /**
+     * ===============Redis-SET数据结构接口START===============
+     */
 
     @Override
-    public <T> void addSet(String key, T val) {
+    public <T> boolean isMember(String key, T val) {
         key = getKey(RedisTypeEnum.SET, key);
         SetOperations<String, T> setOperations = redisTemplate.opsForSet();
-        setOperations.add(key, val);
+        return setOperations.isMember(key, val);
+    }
+
+    @Override
+    public <T> Long addSet(String key, T val) {
+        key = getKey(RedisTypeEnum.SET, key);
+        SetOperations<String, T> setOperations = redisTemplate.opsForSet();
+        return setOperations.add(key, val);
+    }
+
+    @Override
+    public <T> Long setRemove(String key, T val) {
+        key = getKey(RedisTypeEnum.SET, key);
+        SetOperations<String, T> setOperations = redisTemplate.opsForSet();
+        return setOperations.remove(key, val);
     }
 
     @Override
@@ -379,9 +363,17 @@ public class RedisServiceImpl implements RedisService {
         return setOperations.members(key);
     }
 
+    @Override
+    public Long scard(String key) {
+        key = getKey(RedisTypeEnum.SET, key);
+        return redisTemplate.opsForSet().size(key);
+    }
+
     /** ===============Redis-SET数据结构接口END=============== */
 
-    /** ===============Redis-LIST数据结构接口START=============== */
+    /**
+     * ===============Redis-LIST数据结构接口START===============
+     */
 
     @Override
     public <T> Long rPush(String key, T... obj) {
@@ -398,16 +390,19 @@ public class RedisServiceImpl implements RedisService {
         return o == null ? null : o.toString();
     }
 
+    @Override
+    public Long llen(String key) {
+        return redisTemplate.opsForList().size(key);
+    }
+
     /** ===============Redis-LIST数据结构接口END=============== */
 
     /** ===============Redis接口START=============== */
     /**
      * 设置key在多少秒后过期
      *
-     * @param key
-     *            key
-     * @param timeout
-     *            过期时间
+     * @param key     key
+     * @param timeout 过期时间
      * @return boolean 是否设置成功
      */
     @SuppressWarnings("unchecked")
@@ -420,10 +415,8 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 设置key在固定的某个时刻后过期
      *
-     * @param key
-     *            key
-     * @param date
-     *            固定的某个时刻
+     * @param key  key
+     * @param date 固定的某个时刻
      * @return boolean 是否设置成功
      */
     @SuppressWarnings("unchecked")
@@ -435,6 +428,7 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 判断key是否存在
+     *
      * @param key
      * @return
      */
@@ -448,8 +442,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据key删除单个对象
      *
-     * @param key
-     *            Redis中存储的key
+     * @param key Redis中存储的key
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -461,8 +454,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 根据key列表删除多个对象
      *
-     * @param keys
-     *            keys列表
+     * @param keys keys列表
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -492,6 +484,7 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 获取token的有效期
+     *
      * @param key
      */
     @SuppressWarnings("unchecked")

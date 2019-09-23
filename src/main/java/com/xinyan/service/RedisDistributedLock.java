@@ -33,7 +33,7 @@ public class RedisDistributedLock {
     /**
      * 释放锁脚本，原子操作
      * 封装Redis Script
-     * @return  Redis Script
+     * @return Redis Script
      */
     static {
         StringBuilder sb = new StringBuilder();
@@ -50,14 +50,14 @@ public class RedisDistributedLock {
      * 获取分布式锁，原子操作 -> 只尝试获取一次
      *
      * @param lockKey
-     * @param expire
+     * @param msExpire
      * @return
      */
-    public String tryLock(String lockKey, long expire) {
+    public String tryLock(String lockKey, long msExpire) {
         String token = UUID.randomUUID().toString().replace("-", "");
-        try{
-            RedisCallback<Boolean> callback = (connection) -> connection.set(lockKey.getBytes(Charset.forName("UTF-8")), token.getBytes(Charset.forName("UTF-8")), Expiration.seconds(TimeUnit.MILLISECONDS.toSeconds(expire)), RedisStringCommands.SetOption.SET_IF_ABSENT);
-            if ((Boolean)redisTemplate.execute(callback)){
+        try {
+            RedisCallback<Boolean> callback = (connection) -> connection.set(lockKey.getBytes(Charset.forName("UTF-8")), token.getBytes(Charset.forName("UTF-8")), Expiration.seconds(TimeUnit.MILLISECONDS.toSeconds(msExpire)), RedisStringCommands.SetOption.SET_IF_ABSENT);
+            if ((Boolean) redisTemplate.execute(callback)) {
                 return token;
             }
             return null;
@@ -71,20 +71,20 @@ public class RedisDistributedLock {
      * 指定时间内自旋获取分布式锁
      *
      * @param lockKey
-     * @param expire key失效时间
-     * @param timeout 获取锁超时时间
+     * @param msExpire key失效时间
+     * @param timeout  获取锁超时时间
      * @return
      */
-    public String tryLock(String lockKey, long expire, long timeout) {
+    public String tryLock(String lockKey, long msExpire, long timeout) {
         // 限制阻塞时间，根据自己的业务系统设置。如果尝试加锁的线程多的话最好不要设置的太大，要不然会有太多的线程在自旋，耗费CPU
-        Assert.isTrue(timeout>0 && timeout<=60000, "timeout must greater than 0 and less than 1 min");
+        Assert.isTrue(timeout > 0 && timeout <= 60000, "timeout must greater than 0 and less than 1 min");
         long startTime = System.currentTimeMillis();
         String token;
         do {
-            token = tryLock(lockKey, expire);
+            token = tryLock(lockKey, msExpire);
             // 加锁失败
-            if(StringUtils.isBlank(token)) {
-                if((System.currentTimeMillis()-startTime) > (timeout-50)) {
+            if (StringUtils.isBlank(token)) {
+                if ((System.currentTimeMillis() - startTime) > (timeout - 50)) {
                     // 超过阻塞时间则跳出
                     break;
                 }
@@ -104,14 +104,14 @@ public class RedisDistributedLock {
      * 释放锁
      *
      * @param lockKey
-     * @param token 唯一ID
+     * @param token   唯一ID
      * @return
      */
     public boolean releaseLock(String lockKey, String token) {
         Assert.notNull(lockKey, "lockKey must not be null");
         Assert.notNull(token, "Token must not be null");
-        RedisCallback<Boolean> callback = (connection) -> connection.eval(unlockScript.getBytes(), ReturnType.BOOLEAN ,1, lockKey.getBytes(Charset.forName("UTF-8")), token.getBytes(Charset.forName("UTF-8")));
-        return (Boolean)redisTemplate.execute(callback);
+        RedisCallback<Boolean> callback = (connection) -> connection.eval(unlockScript.getBytes(), ReturnType.BOOLEAN, 1, lockKey.getBytes(Charset.forName("UTF-8")), token.getBytes(Charset.forName("UTF-8")));
+        return (Boolean) redisTemplate.execute(callback);
     }
 
     /**
@@ -123,7 +123,7 @@ public class RedisDistributedLock {
     public String get(String lockKey) {
         try {
             RedisCallback<String> callback = (connection) -> new String(connection.get(lockKey.getBytes()), Charset.forName("UTF-8"));
-            return (String)redisTemplate.execute(callback);
+            return (String) redisTemplate.execute(callback);
         } catch (Exception e) {
             log.error("get redis occurred an exception", e);
         }
